@@ -1,7 +1,8 @@
-vim.pack.add{
+vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
     { src = 'https://github.com/mason-org/mason.nvim'},
-}
+    { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
+})
 
 -- Initialize Mason
 require("mason").setup({
@@ -14,21 +15,59 @@ require("mason").setup({
     }
 })
 
-
-vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('my.lsp', {}),
-    callback = function(ev)
-        local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
-
-        if client:supports_method('textDocument/completion') then
-            local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
-            client.server_capabilities.completionProvider.triggerCharacters = chars
-            vim.lsp.completion.enable(true, client.id, ev.buf, {autotrigger = true})
-        end
-    end,
+vim.lsp.enable({ 
+    "emmylua_ls",
 })
 
+-- Completion
 vim.o.completeopt = "fuzzy,menuone,noselect"
 vim.o.complete = '.,w,b,kspell'
 
-vim.lsp.enable("emmylua_ls")
+require("blink.cmp").setup({
+    keymap = {
+        preset = "none",
+        ["<C-h>"] = { "show", "hide" },
+        ["<CR>"] = { "accept", "fallback" },
+        ["<C-j>"] = { "select_next", "fallback" },
+        ["<C-k>"] = { "select_prev", "fallback" },
+    },
+    appearance = { nerd_font_variant = "mono" },
+    completion = { 
+        menu = { 
+            auto_show = true,
+            -- draw = {
+            --     components = {
+            --         kind_icon = {
+            --             text = function(ctx)
+            --                 local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
+            --                 return kind_icon
+            --             end,
+            --             -- (optional) use highlights from mini.icons
+            --             highlight = function(ctx)
+            --                 local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+            --                 return hl
+            --             end,
+            --         },
+            --         kind = {
+            --             -- (optional) use highlights from mini.icons
+            --             highlight = function(ctx)
+            --                 local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+            --                 return hl
+            --             end,
+            --         }
+            --     }
+            -- }
+        }
+    },
+    sources = { default = { "lsp", "path", "buffer", "snippets" } },
+
+    fuzzy = {
+        implementation = "prefer_rust",
+        prebuilt_binaries = { download = true },
+    },
+})
+
+vim.lsp.config["*"] = {
+    capabilities = require("blink.cmp").get_lsp_capabilities(),
+}
+
