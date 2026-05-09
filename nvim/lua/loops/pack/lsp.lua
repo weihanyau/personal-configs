@@ -1,7 +1,8 @@
 vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
-    { src = 'https://github.com/mason-org/mason.nvim'},
-    { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
+    { src = 'https://github.com/mason-org/mason.nvim' },
+    { src = 'https://github.com/stevearc/conform.nvim' },
+    { src = "https://github.com/saghen/blink.cmp",     version = vim.version.range("1.*") },
 })
 
 -- Initialize Mason
@@ -15,7 +16,7 @@ require("mason").setup({
     }
 })
 
-vim.lsp.enable({ 
+vim.lsp.enable({
     "emmylua_ls",
 })
 
@@ -32,8 +33,8 @@ require("blink.cmp").setup({
         ["<C-k>"] = { "select_prev", "fallback" },
     },
     appearance = { nerd_font_variant = "mono" },
-    completion = { 
-        menu = { 
+    completion = {
+        menu = {
             auto_show = true,
             -- draw = {
             --     components = {
@@ -71,3 +72,17 @@ vim.lsp.config["*"] = {
     capabilities = require("blink.cmp").get_lsp_capabilities(),
 }
 
+require("conform").setup({
+    formatters_by_ft = {
+        lua = { "stylua" },
+        javascript = { "oxfmt" },
+        typescript = { "oxfmt" },
+        javascriptreact = { "oxfmt" },
+        typescriptreact = { "oxfmt" },
+    },
+    format_on_save = {
+        -- These options will be passed to conform.format()
+        timeout_ms = 500,
+        lsp_format = "fallback",
+    },
+})
