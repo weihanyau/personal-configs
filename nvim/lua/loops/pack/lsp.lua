@@ -2,7 +2,8 @@ vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
     { src = 'https://github.com/mason-org/mason.nvim' },
     { src = 'https://github.com/stevearc/conform.nvim' },
-    { src = "https://github.com/saghen/blink.cmp",     version = vim.version.range("1.*") },
+    { src = 'https://github.com/mfussenegger/nvim-lint' },
+    { src = "https://github.com/saghen/blink.cmp",      version = vim.version.range("1.*") },
 })
 
 -- Initialize Mason
@@ -36,28 +37,6 @@ require("blink.cmp").setup({
     completion = {
         menu = {
             auto_show = true,
-            -- draw = {
-            --     components = {
-            --         kind_icon = {
-            --             text = function(ctx)
-            --                 local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
-            --                 return kind_icon
-            --             end,
-            --             -- (optional) use highlights from mini.icons
-            --             highlight = function(ctx)
-            --                 local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
-            --                 return hl
-            --             end,
-            --         },
-            --         kind = {
-            --             -- (optional) use highlights from mini.icons
-            --             highlight = function(ctx)
-            --                 local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
-            --                 return hl
-            --             end,
-            --         }
-            --     }
-            -- }
         }
     },
     sources = { default = { "lsp", "path", "buffer", "snippets" } },
@@ -72,6 +51,7 @@ vim.lsp.config["*"] = {
     capabilities = require("blink.cmp").get_lsp_capabilities(),
 }
 
+-- Formatter
 require("conform").setup({
     formatters_by_ft = {
         lua = { "stylua" },
@@ -85,4 +65,19 @@ require("conform").setup({
         timeout_ms = 500,
         lsp_format = "fallback",
     },
+})
+
+-- Linter
+require('lint').linters_by_ft = {
+    lua = { "luacheck" },
+    javascript = { "oxlint" },
+    typescript = { "oxlint" },
+    javascriptreact = { "oxlint" },
+    typescriptreact = { "oxlint" },
+}
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    callback = function()
+        require("lint").try_lint()
+    end,
 })
