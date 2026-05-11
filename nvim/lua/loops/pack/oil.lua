@@ -3,7 +3,12 @@ vim.pack.add({
 })
 
 require("oil").setup({
+    view_options = {
+        show_hidden = true
+    },
     keymaps = {
-        ['<C-c>'] = "<Nop>"
+        ['<C-c>'] = "<Nop>",
+        ['<C-v>'] = { "actions.select", opts = { horizontal = true } },
+        ['<C-h>'] = false
     }
 })
