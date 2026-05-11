@@ -1,5 +1,9 @@
 vim.pack.add({
-	{ src = "https://www.github.com/stevearc/oil.nvim" }
+    { src = "https://www.github.com/stevearc/oil.nvim" }
 })
 
-require("oil").setup()
+require("oil").setup({
+    keymaps = {
+        ['<C-c>'] = "<Nop>"
+    }
+})
