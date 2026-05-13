@@ -8,7 +8,8 @@ require("oil").setup({
     },
     keymaps = {
         ['<C-c>'] = "<Nop>",
-        ['<C-v>'] = { "actions.select", opts = { horizontal = true } },
+        ["<C-s>"] = { "actions.select", opts = { horizontal = true } },
+        ['<C-v>'] = { "actions.select", opts = { vertical = true } },
         ['<C-h>'] = false
     }
 })
