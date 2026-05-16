@@ -44,11 +44,8 @@ vim.opt.splitbelow = true
 vim.opt.autoread = true
 
 local autoReadFileGroup = vim.api.nvim_create_augroup("AutoReadFile", {})
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
-    callback = function()
-        if vim.o.autoread then
-            vim.cmd("checktime")
-        end
-    end,
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+    pattern = "*",
+    command = "if mode() != 'c' | checktime | endif",
     group = autoReadFileGroup
 })
