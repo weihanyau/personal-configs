@@ -19,6 +19,8 @@ require("mason").setup({
 
 vim.lsp.enable({
     "emmylua_ls",
+    "basedpyright",
+    "ruff",
 })
 
 -- Completion
@@ -59,6 +61,7 @@ require("conform").setup({
         typescript = { "oxfmt" },
         javascriptreact = { "oxfmt" },
         typescriptreact = { "oxfmt" },
+        python = { "ruff_fix", "ruff_organize_imports", "ruff_format" }
     },
     format_on_save = {
         -- These options will be passed to conform.format()
@@ -74,6 +77,7 @@ require('lint').linters_by_ft = {
     typescript = { "oxlint" },
     javascriptreact = { "oxlint" },
     typescriptreact = { "oxlint" },
+    python = { "ruff" },
 }
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
