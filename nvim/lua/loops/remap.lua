@@ -29,7 +29,7 @@ vim.keymap.set("n", "<leader>dl", function()
 end, { desc = "Open diagnostic list" })
 vim.keymap.set("n", "<leader>ds", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
 
-vim.keymap.set("n", "<leader>co", function()
+vim.keymap.set("n", "<leader>oi", function()
 	vim.lsp.buf.code_action({
 		apply = true,
 		context = { only = { "source.organizeImports" } },
