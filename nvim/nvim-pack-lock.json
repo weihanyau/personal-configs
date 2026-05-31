@@ -56,6 +56,10 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "supermaven-nvim": {
+      "rev": "07d20fce48a5629686aefb0a7cd4b25e33947d50",
+      "src": "https://github.com/supermaven-inc/supermaven-nvim"
+    },
     "undotree": {
       "rev": "3c6e23c507a08b6fb0c3ac9ed1b10bc67b2a7b48",
       "src": "https://www.github.com/jiaoshijie/undotree"
