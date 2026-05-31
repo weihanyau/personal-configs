@@ -28,3 +28,18 @@ vim.keymap.set("n", "<leader>dl", function()
     vim.diagnostic.setloclist({ open = true })
 end, { desc = "Open diagnostic list" })
 vim.keymap.set("n", "<leader>ds", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
+
+vim.keymap.set("n", "<leader>co", function()
+  vim.lsp.buf.code_action({
+    apply = true,
+    context = { only = { "source.organizeImports" } },
+  })
+end, { desc = "Organize Imports" })
+
+
+vim.keymap.set("n", "<leader>cf", function()
+  vim.lsp.buf.code_action({
+    apply = true,
+    context = { only = { "source.fixAll" } },
+  })
+end, { desc = "Fix All" })
