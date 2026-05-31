@@ -42,3 +42,11 @@ vim.keymap.set("n", "<leader>cs", function()
 		context = { only = { "source" } },
 	})
 end, { desc = "Fix All" })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(event)
+    local opts = { buffer = event.buf }
+    -- Map 'gd' to perform semantic LSP definition jumps project-wide
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+  end,
+})
