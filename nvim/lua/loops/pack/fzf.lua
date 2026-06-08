@@ -1,7 +1,7 @@
 vim.pack.add({ "https://github.com/ibhagwan/fzf-lua" })
 
 require("fzf-lua").setup({
-    defaults = { formatter = { "path.filename_first", 2 } }
+	defaults = { formatter = { "path.filename_first", 2 } },
 })
 
 vim.keymap.set("n", "<leader>ff", function()

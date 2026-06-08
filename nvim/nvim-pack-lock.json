@@ -30,6 +30,10 @@
       "rev": "48555f1615f08c6318150aacb52bf7d61a5af798",
       "src": "https://www.github.com/echasnovski/mini.nvim"
     },
+    "neocodeium": {
+      "rev": "b2fd9f02bf292b1ecc3a29406417601b0e46ad7d",
+      "src": "https://github.com/monkoose/neocodeium"
+    },
     "nvim-lint": {
       "rev": "eab58b48eb11d7745c11c505e0f3057165902461",
       "src": "https://github.com/mfussenegger/nvim-lint"
